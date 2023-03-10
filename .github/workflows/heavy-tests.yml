@@ -379,7 +379,7 @@ jobs:
           do
             echo $var
             parts=$(echo $var | tr "=" "\n")
-            declare "$parts[1]"="$parts[2]"
+            typeset "$parts[1]"="$parts[2]"
           done
 
           echo $jobs_golangci_name
