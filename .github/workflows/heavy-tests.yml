@@ -68,7 +68,7 @@ jobs:
 
           parse_yaml () {
             local prefix=$2
-            local s='[[:space:]]*' w='[a-zA-Z0-9_-]*' fs=$(echo @|tr @ '\034')
+            local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
             sed -ne "s|^\($s\):|\1|" \
                   -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
                   -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
@@ -86,7 +86,7 @@ jobs:
           parse_yaml ".github/workflows/heavy-tests.yml"
 
           if [ "${jobs_${{ github.job }}_name}" ]; then
-            if [ "${{ matrix.os }}" ]; then
+            if [ "${{ matrix.TEST_LANG }}" ]; then
               echo job_name="${jobs_${{ github.job }}_name} (${{ matrix.TEST_LANG }})" >> $GITHUB_OUTPUT
             else
               echo job_name=$jobs_${{ github.job }}_name >> $GITHUB_OUTPUT
@@ -178,7 +178,7 @@ jobs:
 
           parse_yaml () {
             local prefix=$2
-            local s='[[:space:]]*' w='[a-zA-Z0-9_-]*' fs=$(echo @|tr @ '\034')
+            local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
             sed -ne "s|^\($s\):|\1|" \
                   -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
                   -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
@@ -196,7 +196,7 @@ jobs:
           parse_yaml ".github/workflows/heavy-tests.yml"
 
           if [ "${jobs_${{ github.job }}_name}" ]; then
-            if [ "${{ matrix.os }}" ]; then
+            if [ "${{ matrix.TEST_LANG }}" ]; then
               echo job_name="${jobs_${{ github.job }}_name} (${{ matrix.TEST_LANG }})" >> $GITHUB_OUTPUT
             else
               echo job_name=${jobs_${{ github.job }}_name} >> $GITHUB_OUTPUT
@@ -229,7 +229,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  contract-test:
+  contract_test:
     name: Wasm contract tests
     runs-on: 
       - self-hosted
@@ -330,7 +330,7 @@ jobs:
 
           parse_yaml () {
             local prefix=$2
-            local s='[[:space:]]*' w='[a-zA-Z0-9_-]*' fs=$(echo @|tr @ '\034')
+            local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
             sed -ne "s|^\($s\):|\1|" \
                   -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
                   -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
@@ -348,7 +348,7 @@ jobs:
           parse_yaml ".github/workflows/heavy-tests.yml"
 
           if [ "${jobs_${{ github.job }}_name}" ]; then
-            if [ "${{ matrix.os }}" ]; then
+            if [ "${{ matrix.TEST_LANG }}" ]; then
               echo job_name="${jobs_${{ github.job }}_name} (${{ matrix.TEST_LANG }})" >> $GITHUB_OUTPUT
             else
               echo job_name=$jobs_${{ github.job }}_name >> $GITHUB_OUTPUT
