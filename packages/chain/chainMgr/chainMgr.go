@@ -108,6 +108,7 @@ func (o *Output) NeedConsensus() *NeedConsensus                      { return o.
 func (o *Output) NeedPublishTX() *shrinkingmap.ShrinkingMap[iotago.TransactionID, *NeedPublishTX] {
 	return o.cmi.needPublishTX
 }
+
 func (o *Output) String() string {
 	return fmt.Sprintf(
 		"{chainMgr.Output, LatestConfirmedAliasOutput=%v, |ActiveAccessNodes|=%v, NeedConsensus=%v, NeedPublishTX=%v}",
