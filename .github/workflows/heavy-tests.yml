@@ -1,6 +1,9 @@
 name: Nightly Tests
 
 on:
+  push:
+    branches:
+      - nightly-tests
   workflow_dispatch:
   schedule:
     # * is a special character in YAML so you have to quote this string
