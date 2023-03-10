@@ -64,7 +64,9 @@ jobs:
         if: ${{ failure() }}
         id: prepare_outputs
         run: |
-          function parse_yaml {
+          #!/bin/bash
+
+          parse_yaml () {
             local prefix=$2
             local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
             sed -ne "s|^\($s\):|\1|" \
@@ -81,7 +83,7 @@ jobs:
             }'
           }
 
-          parse_yaml ${{ github.workspace }}/.github/workflows/heavy-tests.yml
+          parse_yaml "${{ github.workspace }}/.github/workflows/heavy-tests.yml"
 
           if [ ! -z ${jobs_${{ github.job }}_name} ]; then
             echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
@@ -167,7 +169,9 @@ jobs:
         if: ${{ failure() }}
         id: prepare_outputs
         run: |
-          function parse_yaml {
+          #!/bin/bash
+
+          parse_yaml () {
             local prefix=$2
             local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
             sed -ne "s|^\($s\):|\1|" \
@@ -184,7 +188,7 @@ jobs:
             }'
           }
 
-          parse_yaml ${{ github.workspace }}/.github/workflows/heavy-tests.yml
+          parse_yaml "${{ github.workspace }}/.github/workflows/heavy-tests.yml"
 
           if [ ! -z ${jobs_${{ github.job }}_name} ]; then
             echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
@@ -311,7 +315,9 @@ jobs:
         if: ${{ failure() }}
         id: prepare_outputs
         run: |
-          function parse_yaml {
+          #!/bin/bash
+
+          parse_yaml () {
             local prefix=$2
             local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
             sed -ne "s|^\($s\):|\1|" \
@@ -328,7 +334,7 @@ jobs:
             }'
           }
 
-          parse_yaml ${{ github.workspace }}/.github/workflows/heavy-tests.yml
+          parse_yaml "${{ github.workspace }}/.github/workflows/heavy-tests.yml"
 
           if [ ! -z ${jobs_${{ github.job }}_name} ]; then
             echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
