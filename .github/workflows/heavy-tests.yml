@@ -64,6 +64,31 @@ jobs:
         if: ${{ failure() }}
         id: prepare_outputs
         run: |
+          function parse_yaml {
+            local prefix=$2
+            local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+            sed -ne "s|^\($s\):|\1|" \
+                  -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+                  -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+            awk -F$fs '{
+                indent = length($1)/2;
+                vname[indent] = $2;
+                for (i in vname) {if (i > indent) {delete vname[i]}}
+                if (length($3) > 0) {
+                  vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+                  printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+                }
+            }'
+          }
+
+          parse_yaml ${{ github.workspace }}/.github/workflows/heavy-tests.yml
+
+          if [ ! -z ${jobs_${{ github.job }}_name} ]; then
+            echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
+          else
+            echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
+          fi
+
           apt install jq -y
           echo github_steps=$(echo '${{ toJSON(steps) }}' | jq -r -c . | sed -e 's:\":\\\":g') >> $GITHUB_OUTPUT
 
@@ -79,7 +104,7 @@ jobs:
               "run_attempt": "${{ github.run_attempt }}",
               "workflow": "${{ github.workflow }}",
               "sha": "${{ github.sha }}",
-              "ref": "${{ github.ref }}",
+              "ref": "${{ github.ref_name }}",
               "run_id": "${{ github.run_id }}",
               "server_url": "${{ github.server_url }}",
               "repository": "${{ github.repository }}"
@@ -142,6 +167,31 @@ jobs:
         if: ${{ failure() }}
         id: prepare_outputs
         run: |
+          function parse_yaml {
+            local prefix=$2
+            local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+            sed -ne "s|^\($s\):|\1|" \
+                  -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+                  -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+            awk -F$fs '{
+                indent = length($1)/2;
+                vname[indent] = $2;
+                for (i in vname) {if (i > indent) {delete vname[i]}}
+                if (length($3) > 0) {
+                  vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+                  printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+                }
+            }'
+          }
+
+          parse_yaml ${{ github.workspace }}/.github/workflows/heavy-tests.yml
+
+          if [ ! -z ${jobs_${{ github.job }}_name} ]; then
+            echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
+          else
+            echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
+          fi
+
           apt install jq -y
           echo github_steps=$(echo '${{ toJSON(steps) }}' | jq -r -c . | sed -e 's:\":\\\":g') >> $GITHUB_OUTPUT
      
@@ -152,12 +202,13 @@ jobs:
           payload: |
             {
               "job": "${{ github.job }}",
+              "job_name" : "${{ steps.prepare_outputs.outputs.job_name }}",
               "steps": "${{ steps.prepare_outputs.outputs.github_steps }}",
               "run_number": "${{ github.run_number }}",
               "run_attempt": "${{ github.run_attempt }}",
               "workflow": "${{ github.workflow }}",
               "sha": "${{ github.sha }}",
-              "ref": "${{ github.ref }}",
+              "ref": "${{ github.ref_name }}",
               "run_id": "${{ github.run_id }}",
               "server_url": "${{ github.server_url }}",
               "repository": "${{ github.repository }}"
@@ -260,6 +311,31 @@ jobs:
         if: ${{ failure() }}
         id: prepare_outputs
         run: |
+          function parse_yaml {
+            local prefix=$2
+            local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+            sed -ne "s|^\($s\):|\1|" \
+                  -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+                  -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+            awk -F$fs '{
+                indent = length($1)/2;
+                vname[indent] = $2;
+                for (i in vname) {if (i > indent) {delete vname[i]}}
+                if (length($3) > 0) {
+                  vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+                  printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+                }
+            }'
+          }
+
+          parse_yaml ${{ github.workspace }}/.github/workflows/heavy-tests.yml
+
+          if [ ! -z ${jobs_${{ github.job }}_name} ]; then
+            echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
+          else
+            echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
+          fi
+
           apt install jq -y
           echo github_steps=$(echo '${{ toJSON(steps) }}' | jq -r -c . | sed -e 's:\":\\\":g') >> $GITHUB_OUTPUT
 
@@ -275,7 +351,7 @@ jobs:
               "run_attempt": "${{ github.run_attempt }}",
               "workflow": "${{ github.workflow }}",
               "sha": "${{ github.sha }}",
-              "ref": "${{ github.ref }}",
+              "ref": "${{ github.ref_name }}",
               "run_id": "${{ github.run_id }}",
               "server_url": "${{ github.server_url }}",
               "repository": "${{ github.repository }}"
