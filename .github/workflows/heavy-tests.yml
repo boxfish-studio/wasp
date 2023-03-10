@@ -65,10 +65,6 @@ jobs:
         id: prepare_outputs
         run: |
           #!/bin/bash
-
-          echo $jobs_golangci_name
-          echo $jobs_test_name
-          echo $jobs_contract_test_name
           
           parse_yaml () {
             local prefix=$2
@@ -88,6 +84,10 @@ jobs:
           }
 
           parse_yaml ".github/workflows/heavy-tests.yml"
+
+          echo $jobs_golangci_name
+          echo $jobs_test_name
+          echo $jobs_contract_test_name
 
           if [ "${jobs_${{ github.job }}_name}" ]; then
             if [ "${{ matrix.TEST_LANG }}" ]; then
@@ -179,10 +179,6 @@ jobs:
         id: prepare_outputs
         run: |
           #!/bin/bash
-
-          echo $jobs_golangci_name
-          echo $jobs_test_name
-          echo $jobs_contract_test_name
           
           parse_yaml () {
             local prefix=$2
@@ -202,6 +198,10 @@ jobs:
           }
 
           parse_yaml ".github/workflows/heavy-tests.yml"
+
+          echo $jobs_golangci_name
+          echo $jobs_test_name
+          echo $jobs_contract_test_name
 
           if [ "${jobs_${{ github.job }}_name}" ]; then
             if [ "${{ matrix.TEST_LANG }}" ]; then
@@ -335,10 +335,6 @@ jobs:
         id: prepare_outputs
         run: |
           #!/bin/bash
-
-          echo $jobs_golangci_name
-          echo $jobs_test_name
-          echo $jobs_contract_test_name
           
           parse_yaml () {
             local prefix=$2
@@ -358,6 +354,10 @@ jobs:
           }
 
           parse_yaml ".github/workflows/heavy-tests.yml"
+
+          echo $jobs_golangci_name
+          echo $jobs_test_name
+          echo $jobs_contract_test_name
 
           if [ "${jobs_${{ github.job }}_name}" ]; then
             if [ "${{ matrix.TEST_LANG }}" ]; then
