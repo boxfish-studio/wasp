@@ -83,7 +83,7 @@ jobs:
             }'
           }
 
-          parse_yaml "${{ github.workspace }}/.github/workflows/heavy-tests.yml"
+          parse_yaml ".github/workflows/heavy-tests.yml"
 
           if [ ! -z ${jobs_${{ github.job }}_name} ]; then
             echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
@@ -101,6 +101,7 @@ jobs:
           payload: |
             {
               "job": "${{ github.job }}",
+              "job_name" : "${{ steps.prepare_outputs.outputs.job_name }}",
               "steps": "${{ steps.prepare_outputs.outputs.github_steps }}",
               "run_number": "${{ github.run_number }}",
               "run_attempt": "${{ github.run_attempt }}",
@@ -352,6 +353,7 @@ jobs:
           payload: |
             {
               "job": "${{ github.job }}",
+              "job_name" : "${{ steps.prepare_outputs.outputs.job_name }}",
               "steps": "${{ steps.prepare_outputs.outputs.github_steps }}",
               "run_number": "${{ github.run_number }}",
               "run_attempt": "${{ github.run_attempt }}",
