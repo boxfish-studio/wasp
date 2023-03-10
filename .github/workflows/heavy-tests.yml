@@ -66,6 +66,10 @@ jobs:
         run: |
           #!/bin/bash
 
+          echo $jobs_golangci_name
+          echo $jobs_test_name
+          echo $jobs_contract_test_name
+          
           parse_yaml () {
             local prefix=$2
             local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
@@ -176,6 +180,10 @@ jobs:
         run: |
           #!/bin/bash
 
+          echo $jobs_golangci_name
+          echo $jobs_test_name
+          echo $jobs_contract_test_name
+          
           parse_yaml () {
             local prefix=$2
             local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
@@ -328,6 +336,10 @@ jobs:
         run: |
           #!/bin/bash
 
+          echo $jobs_golangci_name
+          echo $jobs_test_name
+          echo $jobs_contract_test_name
+          
           parse_yaml () {
             local prefix=$2
             local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
