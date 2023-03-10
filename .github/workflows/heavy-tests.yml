@@ -85,7 +85,7 @@ jobs:
 
           parse_yaml ".github/workflows/heavy-tests.yml"
 
-          if [[ -v $jobs_${{ github.job }}_name ]]; then
+          if [[ ! -v $jobs_${{ github.job }}_name ]]; then
             echo job_name=$jobs_${{ github.job }}_name >> $GITHUB_OUTPUT
           else
             echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
@@ -189,9 +189,9 @@ jobs:
             }'
           }
 
-          parse_yaml "${{ github.workspace }}/.github/workflows/heavy-tests.yml"
+          parse_yaml ".github/workflows/heavy-tests.yml"
 
-          if [[ -v $jobs_${{ github.job }}_name ]]; then
+          if [[ ! -v $jobs_${{ github.job }}_name ]]; then
             echo job_name=$jobs_${{ github.job }}_name >> $GITHUB_OUTPUT
           else
             echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
@@ -335,9 +335,9 @@ jobs:
             }'
           }
 
-          parse_yaml "${{ github.workspace }}/.github/workflows/heavy-tests.yml"
+          parse_yaml ".github/workflows/heavy-tests.yml"
 
-          if [[ -v $jobs_${{ github.job }}_name ]]; then
+          if [[ ! -v $jobs_${{ github.job }}_name ]]; then
             echo job_name=$jobs_${{ github.job }}_name >> $GITHUB_OUTPUT
           else
             echo job_name=${{ github.job }} >> $GITHUB_OUTPUT
