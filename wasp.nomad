@@ -19,7 +19,7 @@ job "wasp" {
       sticky  = true
     }
 
-    count = 1
+    count = 4
 
     network {
       mode = "host"
@@ -27,16 +27,16 @@ job "wasp" {
       port "dashboard" {
         to = 80
       }
-      port "api" {
-      }
-      port "nanomsg" {
-      }
-      port "peering" {
-      }
-      port "metrics" {
-      }
-      port "profiling" {
-      }
+
+      port "api" {}
+
+      port "nanomsg" {}
+
+      port "peering" {}
+
+      port "metrics" {}
+
+      port "profiling" {}
     }
 
     service {

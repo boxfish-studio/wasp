@@ -1,7 +1,7 @@
 # The name of your project. A project typically maps 1:1 to a VCS repository.
 # This name must be unique for your Waypoint server. If you're running in
 # local mode, this must be unique to your machine.
-project = "isc"
+project = "toolkit"
 
 # Labels can be specified for organizational purposes.
 labels = { "team" = "isc" }
@@ -19,6 +19,7 @@ app "evm-toolkit" {
         use "docker" {
             disable_entrypoint = true
             buildkit   = true
+            platform = "linux/x86_64"
             dockerfile = "./Dockerfile"
         }
 
