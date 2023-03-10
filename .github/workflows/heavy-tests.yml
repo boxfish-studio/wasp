@@ -79,13 +79,17 @@ jobs:
                 if (length($3) > 0) {
                   vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
                   printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-                  declare "${prefix}vn$2"="$3"
                 }
             }'
           }
 
-          parse_yaml ".github/workflows/heavy-tests.yml"
+          vars=`parse_yaml ".github/workflows/heavy-tests.yml"`
 
+          for var in ${vars[@]}
+          do
+            declare $($var)
+          done
+          
           echo $jobs_golangci_name
           echo $jobs_test_name
           echo $jobs_contract_test_name
@@ -194,12 +198,16 @@ jobs:
   #               if (length($3) > 0) {
   #                 vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
   #                 printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-  #                 declare "${prefix}vn$2"="$3"
   #               }
   #           }'
   #         }
 
-  #         parse_yaml ".github/workflows/heavy-tests.yml"
+          # vars=`parse_yaml ".github/workflows/heavy-tests.yml"`
+
+          # for var in ${vars[@]}
+          # do
+          #   declare $($var)
+          # done
 
   #         echo $jobs_golangci_name
   #         echo $jobs_test_name
@@ -351,12 +359,16 @@ jobs:
                 if (length($3) > 0) {
                   vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
                   printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-                  declare "${prefix}vn$2"="$3"
                 }
             }'
           }
 
-          parse_yaml ".github/workflows/heavy-tests.yml"
+          vars=`parse_yaml ".github/workflows/heavy-tests.yml"`
+
+          for var in ${vars[@]}
+          do
+            declare $($var)
+          done
 
           echo $jobs_golangci_name
           echo $jobs_test_name
