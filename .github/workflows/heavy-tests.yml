@@ -375,18 +375,17 @@ jobs:
 
           parse_yaml ".github/workflows/heavy-tests.yml" > .tmp
 
-          OIFS=$IFS
-          IFS='='
 
-          while read LINE;
-          do
+          while IFS= read -r LINE; do
+            OIFS=$IFS
+            IFS='='
             echo $LINE
             read -ra parts << "$LINE"
             echo "${parts}"
             printf -v "${parts[0]}" '%s' "${parts[1]}"
+            IFS=$OIFS
           done < .tmp
 
-          IFS=$OIFS
 
           echo $jobs_golangci_name
           echo $jobs_test_name
