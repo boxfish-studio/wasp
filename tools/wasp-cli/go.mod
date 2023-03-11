@@ -11,7 +11,7 @@ replace (
 require (
 	github.com/ethereum/go-ethereum v1.11.2
 	github.com/hashicorp/go-version v1.6.0
-	github.com/iotaledger/hive.go/logger v0.0.0-20230306152651-c96d32e6baec
+	github.com/iotaledger/hive.go/logger v0.0.0-20230309203853-5f25e5dd78ae
 	github.com/iotaledger/iota.go/v3 v3.0.0-rc.1.0.20230223105330-ef33ea7fe34f
 	github.com/iotaledger/wasp v1.0.0-00010101000000-000000000000
 	github.com/samber/lo v1.37.0
