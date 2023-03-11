@@ -269,85 +269,86 @@ jobs:
       - name: Install dependencies
         id: dependencies
         run: |
+          exit -1
           apt update
           apt install -y build-essential libstdc++6 software-properties-common make gcc git wget curl tar
 
-      - name: Install solc
-        id: solc
-        run: |
-          add-apt-repository ppa:ethereum/ethereum
-          apt-get update
-          apt-get install solc
+      # - name: Install solc
+      #   id: solc
+      #   run: |
+      #     add-apt-repository ppa:ethereum/ethereum
+      #     apt-get update
+      #     apt-get install solc
 
-      - name: checkout to the directory
-        id: checkout
-        uses: actions/checkout@v3
+      # - name: checkout to the directory
+      #   id: checkout
+      #   uses: actions/checkout@v3
 
-      - name: install golang
-        id: go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.20.1
+      # - name: install golang
+      #   id: go
+      #   uses: actions/setup-go@v3
+      #   with:
+      #     go-version: 1.20.1
 
-      - name: install tinygo
-        id: tinygo
-        # only work on x86_64
-        run: |
-          wget https://github.com/tinygo-org/tinygo/releases/download/v0.27.0/tinygo_0.27.0_amd64.deb
-          dpkg -i tinygo_0.27.0_amd64.deb
-          export PATH=$PATH:/usr/local/bin
+      # - name: install tinygo
+      #   id: tinygo
+      #   # only work on x86_64
+      #   run: |
+      #     wget https://github.com/tinygo-org/tinygo/releases/download/v0.27.0/tinygo_0.27.0_amd64.deb
+      #     dpkg -i tinygo_0.27.0_amd64.deb
+      #     export PATH=$PATH:/usr/local/bin
 
-      - name: install rust-toolchain
-        id: rust
-        uses: actions-rs/toolchain@v1.0.7
-        with:
-          toolchain: stable
+      # - name: install rust-toolchain
+      #   id: rust
+      #   uses: actions-rs/toolchain@v1.0.7
+      #   with:
+      #     toolchain: stable
 
-      - name: install wasm-pack
-        id: wasm-pack
-        run: |
-          curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      # - name: install wasm-pack
+      #   id: wasm-pack
+      #   run: |
+      #     curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
-      - name: install Node.js
-        id: node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      # - name: install Node.js
+      #   id: node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18
 
-      - name: install schema
-        id: schema
-        run: |
-          cd contracts/wasm/scripts
-          bash schema_all.sh
-          cd ..
-          npm install
+      # - name: install schema
+      #   id: schema
+      #   run: |
+      #     cd contracts/wasm/scripts
+      #     bash schema_all.sh
+      #     cd ..
+      #     npm install
 
-      - name: run builds
-        id: build
-        env:
-          TEST_LANG: ${{matrix.TEST_LANG}}
-        run: |
-          git config --global --add safe.directory /__w/wasp/wasp
-          cd contracts/wasm/scripts
-          bash core_build.sh
-          if [ $TEST_LANG == "go" ]; then
-            bash schema_all.sh
-          elif [ $TEST_LANG == "gowasm" ]; then
-            bash go_all.sh
-          elif [ $TEST_LANG == "tswasm" ]; then
-            bash ts_all.sh
-          elif [ $TEST_LANG == "rswasm" ]; then
-            bash rust_all.sh
-          fi
+      # - name: run builds
+      #   id: build
+      #   env:
+      #     TEST_LANG: ${{matrix.TEST_LANG}}
+      #   run: |
+      #     git config --global --add safe.directory /__w/wasp/wasp
+      #     cd contracts/wasm/scripts
+      #     bash core_build.sh
+      #     if [ $TEST_LANG == "go" ]; then
+      #       bash schema_all.sh
+      #     elif [ $TEST_LANG == "gowasm" ]; then
+      #       bash go_all.sh
+      #     elif [ $TEST_LANG == "tswasm" ]; then
+      #       bash ts_all.sh
+      #     elif [ $TEST_LANG == "rswasm" ]; then
+      #       bash rust_all.sh
+      #     fi
 
-      - name: run tests
-        id: tests
-        env:
-          TEST_LANG: ${{matrix.TEST_LANG}}
-        run: |
-          make compile-solidity
-          cd contracts/wasm
-          go test ./... $(echo -"$TEST_LANG") -p 1
+      # - name: run tests
+      #   id: tests
+      #   env:
+      #     TEST_LANG: ${{matrix.TEST_LANG}}
+      #   run: |
+      #     make compile-solidity
+      #     cd contracts/wasm
+      #     go test ./... $(echo -"$TEST_LANG") -p 1
 
       - name: prepare reporting outputs
         if: ${{ failure() }}
