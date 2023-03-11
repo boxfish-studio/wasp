@@ -21,7 +21,7 @@ require (
 	github.com/iotaledger/hive.go/lo v0.0.0-20230306152651-c96d32e6baec
 	github.com/iotaledger/hive.go/logger v0.0.0-20230306152651-c96d32e6baec
 	github.com/iotaledger/hive.go/objectstorage v0.0.0-20230306152651-c96d32e6baec
-	github.com/iotaledger/hive.go/runtime v0.0.0-20230306152651-c96d32e6baec
+	github.com/iotaledger/hive.go/runtime 5f25e5dd78ae
 	github.com/iotaledger/hive.go/serializer/v2 v2.0.0-rc.1.0.20230306152651-c96d32e6baec
 	github.com/iotaledger/hive.go/web v0.0.0-20230306152651-c96d32e6baec
 	github.com/iotaledger/inx-app v1.0.0-rc.3.0.20230301154217-d62c1a1681d2
