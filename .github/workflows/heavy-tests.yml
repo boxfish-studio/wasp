@@ -379,6 +379,7 @@ jobs:
           do
             echo $var
             parts=$(echo $var | tr "=" "\n")
+            echo "${parts[@]}"
             printf -v "${parts[1]}" '%s' "${parts[2]}"
           done
 
