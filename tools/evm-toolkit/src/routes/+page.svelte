@@ -5,14 +5,13 @@
   import { onMount } from 'svelte';
   import { networks, selectedNetwork } from '../store';
   import NetworkSettings from '$components/network_settings/network_settings.svelte';
-  import {NETWORKS} from '$lib/networks';
+  import { NETWORKS } from '$lib/networks';
 
   onMount(async () => {
     networks.set(NETWORKS);
     selectedNetwork.set(NETWORKS[1]);
   });
 
-  $: $selectedNetwork 
 </script>
 
 <main>
