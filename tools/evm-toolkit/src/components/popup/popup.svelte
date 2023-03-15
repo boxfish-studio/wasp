@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PopupAction } from '$lib/popup';
-    import { handleEscapeKeyDown } from '$lib/utils';
-    import { Button } from '..';
+  import { handleEscapeKeyDown } from '$lib/utils';
+  import { Button } from '..';
 
   export let onClose: () => unknown = () => {};
   export let title: string | undefined = undefined;
@@ -31,27 +31,27 @@
   }
 </script>
 
-<svelte:window on:keydown={(event) => handleEscapeKeyDown(event, handleClose)} />
+<svelte:window on:keydown={event => handleEscapeKeyDown(event, handleClose)} />
 <popup-overlay on:click={handleClose} on:keydown />
 <popup-main>
   <popup-header>
     <h3 class="capitalize">{title}</h3>
-    <Button onClick={handleClose} title="X" secondary/>
+    <Button onClick={handleClose} title="X" secondary />
   </popup-header>
   <popup-body class="p-4">
     <slot />
   </popup-body>
-  <popup-footer class="space-x-4">
-    {#if actions.length > 0}
+  {#if actions.length > 0}
+    <popup-footer class="space-x-4">
       {#each actions as { action, title }, index}
-      <Button
-      {title}
-      onClick={() => handleActionClick(index, action)}
-      busy={actionsBusyState[index]}
-  />
+        <Button
+          {title}
+          onClick={() => handleActionClick(index, action)}
+          busy={actionsBusyState[index]}
+        />
       {/each}
-    {/if}
-  </popup-footer>
+    </popup-footer>
+  {/if}
 </popup-main>
 
 <style lang="scss">
