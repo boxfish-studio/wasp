@@ -7,3 +7,4 @@ export { default as NetworkSettings } from './network_settings/network_settings.
 export { default as Button } from './button.svelte'
 
 export * from './popup'
+export * from './inputs'

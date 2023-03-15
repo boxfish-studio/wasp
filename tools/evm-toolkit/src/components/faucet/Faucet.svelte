@@ -2,10 +2,11 @@
   import { onMount } from 'svelte';
   import { IotaWallet } from './iota_wallet';
   import { SendFundsTransaction } from './send_funds_transaction';
-
   import { toast } from '@zerodevx/svelte-toast';
   import { selectedNetwork, nodeClient, indexerClient } from '../../store';
   import { Bech32AddressLength, EVMAddressLength } from '../../lib/constants';
+  import { Input } from '..';
+  import Button from '../button.svelte';
 
   let isSendingFunds: boolean;
   let errorMessage: string;
@@ -72,35 +73,33 @@
   }
 </script>
 
-<component>
+<faucet-component class="flex flex-col space-y-6 mt-6">
   {#if $selectedNetwork}
-    <div class="input_container">
-      <span class="header">Your EVM Address</span>
-      <input type="text" bind:value={evmAddress} />
-    </div>
+    <Input
+      id="evmAddress"
+      label="Your EVM Address"
+      bind:value={evmAddress}
+      stretch
+    />
 
+    <!-- TODO: when we add notification manager we should replace this with a notification. -->
     {#if errorMessage}
-      <div class="input_container">
-        <div class="error">
-          <div class="error_title">Error</div>
-          <div class="error_message">
-            {errorMessage}
-          </div>
+      <div class="error">
+        <div class="error_title">Error</div>
+        <div class="error_message">
+          {errorMessage}
         </div>
       </div>
     {/if}
 
-    <div class="input_container">
-      <button class="button" disabled={!enableSendFunds} on:click={sendFunds}>
-        {#if !isSendingFunds}
-          Send funds
-        {:else}
-          Sending ..
-        {/if}
-      </button>
-    </div>
+    <Button
+      title="Send funds"
+      disabled={!enableSendFunds}
+      onClick={sendFunds}
+      busy={isSendingFunds}
+    />
   {/if}
-</component>
+</faucet-component>
 
 <style>
   .error {
