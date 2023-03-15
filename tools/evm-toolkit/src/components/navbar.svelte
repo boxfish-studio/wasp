@@ -1,4 +1,25 @@
 <script lang="ts">
+    import { PopupId } from "$lib/popup";
+    import { openPopup } from "$lib/popup/actions";
+    import { closePopup } from "$lib/popup/actions";
+    import { NetworkSettings } from ".";
+
+  function handleSettings(){
+    function _closeSettings() {
+      closePopup(PopupId.Settings)
+    }
+    openPopup(PopupId.Settings, {
+      title: "Network settings",
+      component: NetworkSettings,
+      actions: [
+        {
+          title: "Save",
+          action: _closeSettings,
+        },
+      ],
+
+    });
+  }
 </script>
 
 <nav class="flex justify-between items center">
@@ -6,4 +27,7 @@
     <img src="/logo.svg" alt="Shimmer logo" />
     <span class="text-24 ml-4 text-white font-semibold">shimmer</span>
   </image-wrapper>
+  <items-wrapper class="flex items-center space-x-4 mr-4">
+    <img src="/settings-icon.svg" alt="Shimmer logo" class="cursor-pointer p-2" on:click={handleSettings} on:keypress={handleSettings}/>
+  </items-wrapper>
 </nav>
