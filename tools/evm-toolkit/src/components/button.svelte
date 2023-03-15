@@ -2,7 +2,6 @@
   import { ButtonHtmlType } from '$lib/enums'
     import { handleEnterKeyDown } from '$lib/utils';
 
-  export let outlined: boolean = false
   export let compact: boolean = false
   export let title: string = ''
   export let url: string = ''
