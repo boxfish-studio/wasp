@@ -20,6 +20,8 @@
   import type { WithdrawFormInput, WithdrawState } from './component_types';
   import { ISCMagic } from './iscmagic/iscmagic';
   import type { INativeToken, INFT } from '../../lib/native_token';
+  import { Input, Button } from '..';
+  import { InputType } from '$lib/enums';
 
   const state: WithdrawState = {
     availableBaseTokens: 0,
@@ -265,43 +267,39 @@
       state.availableNFTs,
     );
   }
+
 </script>
 
-<component>
+<withdraw-component class="flex flex-col space-y-6 mt-6">
   {#if !$connected}
     <div class="input_container">
       <button on:click={connectToWallet}>Connect to Wallet</button>
     </div>
   {:else if !state.isLoading}
-    <div class="account_container">
-      <div class="chain_container">
-        <div>Chain ID</div>
-        <div class="chainid">{$chainId}</div>
+    <info-box>
+      <div class="flex flex-col space-y-2">
+        <info-item-title>Chain ID</info-item-title>
+        <info-item-value>{$chainId}</info-item-value>
       </div>
-      <div class="balance_container">
-        <div>Balance</div>
-        <div class="balance">{formattedBalance}</div>
+      <div class="flex flex-col space-y-2">
+        <info-item-title>Balance</info-item-title>
+        <info-item-value>{formattedBalance}</info-item-value>
       </div>
-    </div>
-
-    <div class="input_container">
-      <span class="header">Receiver address</span>
-      <input
-        type="text"
-        placeholder="L1 address starting with (rms/tst/...)"
-        bind:value={formInput.receiverAddress}
-      />
-    </div>
-
-    <div class="input_container">
-      <div class="header">Tokens to send</div>
-
-      <div class="token_list">
-        <div class="token_list-item">
-          <div class="header">
+    </info-box>
+    <Input
+      type={InputType.Text}
+      label="Receiver address"
+      bind:value={formInput.receiverAddress}
+      placeholder="L1 address starting with (rms/tst/...)"
+      stretch
+    />
+    <tokens-to-send-wrapper>
+      <div class="mb-2">Tokens to send</div>
+      <info-box class="flex flex-col space-y-2 max-h-96 overflow-auto">
+        <div>
+          <info-item-title>
             SMR Token: {formattedAmountToSend}
-          </div>
-
+          </info-item-title>
           <input
             type="range"
             disabled={!canSetAmountToWithdraw}
@@ -312,12 +310,12 @@
         </div>
 
         {#each state.availableNativeTokens as nativeToken}
-          <div class="token_list-item">
-            <div class="header">
+          <div>
+            <info-item-title>
               {nativeToken.metadata.name} Token: {formInput.nativeTokensToSend[
                 nativeToken.id
               ] || 0}
-            </div>
+            </info-item-title>
             <input
               type="range"
               min="0"
@@ -326,91 +324,53 @@
             />
           </div>
         {/each}
-      </div>
-    </div>
-
-    <div class="input_container">
-      <div class="header">NFTs</div>
-
-      <div class="token_list">
-        {#each state.availableNFTs as nft}
-          <div class="token_list-item">
-            <div class="header">
-              {nft.id}
-            </div>
+      </info-box>
+    </tokens-to-send-wrapper>
+    {#if state.availableNFTs.length > 0}
+      <nfts-wrapper>
+        <div class="mb-2">NFTs</div>
+        <info-box>
+          <div class="flex flex-col space-y-2">
+            {#each state.availableNFTs as nft}
+              <info-item-title>
+                {nft.id}
+              </info-item-title>
+            {/each}
           </div>
-        {/each}
-      </div>
-    </div>
-
-    <div class="input_container">
-      <button disabled={!canWithdraw} on:click={onWithdrawClick}>
-        Withdraw
-      </button>
-    </div>
-    <div class="input_container">
-      <button
-        class="warning"
-        disabled={!canWithdrawEverything}
-        on:click={onWithdrawEverythingClick}
-      >
-        Withdraw everything at once
-      </button>
-    </div>
+        </info-box>
+      </nfts-wrapper>
+    {/if}
+    <Button
+      title="Withdraw"
+      onClick={onWithdrawClick}
+      disabled={!canWithdraw}
+      stretch
+    />
+    <Button
+      danger
+      title="Withdraw everything at once"
+      onClick={onWithdrawEverythingClick}
+      disabled={!canWithdrawEverything}
+      stretch
+    />
   {/if}
-</component>
+</withdraw-component>
 
 <style>
-  .warning:disabled {
-    background-color: #6a1b1e;
+  info-box {
+    @apply w-full;
+    @apply flex;
+    @apply justify-between;
+    @apply bg-shimmer-background-tertiary;
+    @apply rounded-xl;
+    @apply p-4;
+  }
+  info-item-title {
+    @apply text-xs;
+    @apply text-shimmer-text-secondary;
   }
 
-  .warning {
-    background-color: #b92e34;
-    border-color: red;
-    color: white;
-  }
-
-  .token_list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .token_list-item {
-    border: 1px solid gray;
-    border-radius: 4px;
-    padding: 20px;
-    margin: 10px;
-    margin-left: 0;
-  }
-
-  component {
-    color: rgba(255, 255, 255, 0.87);
-    display: flex;
-    flex-direction: column;
-  }
-
-  input[type='range'] {
-    width: 100%;
-    padding: 10px 0 0 0;
-    margin: 0;
-  }
-
-  .account_container {
-    height: 64px;
-    margin: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .balance_container {
-    text-align: right;
-  }
-
-  .balance,
-  .chainid {
-    padding-top: 5px;
-    font-weight: 800;
-    font-size: 32px;
+  info-item-value {
+    @apply text-2xl;
   }
 </style>
