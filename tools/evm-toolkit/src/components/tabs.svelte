@@ -38,7 +38,7 @@
     @apply py-2 px-6;
     &.active {
       @apply border-b-2;
-      @apply border-b-green-primary;
+      @apply border-b-shimmer-action-primary;
     }
   }
 

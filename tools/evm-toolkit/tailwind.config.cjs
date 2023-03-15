@@ -6,11 +6,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        green: {
-          primary: '#00F5DD',
-        },
-        blue: {
-          dark: '#04111B',
+        shimmer:{
+          ['action-primary']: '#00F5DD',
+          background: '#04111B',
         },
         fontSize: {
           12: pxToRem(12),
