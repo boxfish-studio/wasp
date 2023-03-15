@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ButtonHtmlType } from '$lib/enums'
-    import { handleEnterKeyDown } from 'src/lib/utils';
+    import { handleEnterKeyDown } from '$lib/utils';
 
   export let outlined: boolean = false
   export let compact: boolean = false

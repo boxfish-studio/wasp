@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PopupAction } from '$lib/popup';
-    import { handleEscapeKeyDown } from 'src/lib/utils';
+    import { handleEscapeKeyDown } from '$lib/utils';
     import { Button } from '..';
 
   export let onClose: () => unknown = () => {};
