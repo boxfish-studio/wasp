@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { Box, Tabs, Faucet,Withdraw } from '$components';
-    import { NETWORKS } from '$lib/networks';
-    import { networks, selectedNetwork } from '../../store';
-    import { onMount } from 'svelte';
+  import { Box, Tabs, Faucet, Withdraw } from '$components';
+  import { NETWORKS } from '$lib/networks';
+  import { networks, selectedNetwork } from '../../store';
+  import { onMount } from 'svelte';
 
   onMount(async () => {
     networks.set(NETWORKS);
     selectedNetwork.set(NETWORKS[1]);
   });
-  
+
   const TABS = [
     {
       label: 'Faucet',
@@ -17,7 +17,6 @@
     },
     {
       label: 'Withdraw',
-      value: 2,
       component: Withdraw,
     },
   ];
