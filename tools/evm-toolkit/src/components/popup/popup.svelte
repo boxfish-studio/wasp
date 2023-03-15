@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PopupAction } from '$lib/popup';
+    import { handleEscapeKeyDown } from 'src/lib/utils';
     import { Button } from '..';
 
   export let onClose: () => unknown = () => {};
@@ -30,7 +31,7 @@
   }
 </script>
 
-<svelte:window on:keydown={handleClose} />
+<svelte:window on:keydown={(event) => handleEscapeKeyDown(event, handleClose)} />
 <popup-overlay on:click={handleClose} on:keydown />
 <popup-main>
   <popup-header>

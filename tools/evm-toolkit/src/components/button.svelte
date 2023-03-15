@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ButtonHtmlType } from '$lib/enums'
+    import { handleEnterKeyDown } from 'src/lib/utils';
 
   export let outlined: boolean = false
   export let compact: boolean = false
@@ -26,7 +27,7 @@
   {rel}
   disabled={disabled || busy}
   on:click={onClick}
-  on:keydown={onClick}
+  on:keydown={(event) => handleEnterKeyDown(event, onClick)}
   class:link={htmlType === ButtonHtmlType.Link}
   class:danger
   class:w-full={stretch}
