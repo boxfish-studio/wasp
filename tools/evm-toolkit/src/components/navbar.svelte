@@ -1,18 +1,13 @@
 <script lang="ts">
   import { PopupId } from '$lib/popup';
   import { openPopup } from '$lib/popup/actions';
-  import { closePopup } from '$lib/popup/actions';
   import { handleEnterKeyDown } from '$lib/utils';
   import { NetworkSettings } from '.';
 
   function handleSettings() {
-    function _closeSettings() {
-      closePopup(PopupId.Settings);
-    }
     openPopup(PopupId.Settings, {
       title: 'Network settings',
       component: NetworkSettings,
-      actions: [],
     });
   }
 </script>
