@@ -50,6 +50,7 @@
 
 <style lang="scss">
   input-component {
+    @apply text-white;
     @apply flex flex-col space-y-1;
     @apply text-base;
     @apply bg-shimmer-background-tertiary;
@@ -66,10 +67,13 @@
     @apply border-none;
     @apply bg-transparent;
     @apply p-0;
+    &::placeholder {
+      @apply text-gray-500;
+    }
   }
   label {
     @apply text-sm;
     @apply font-semibold;
-    @apply text-gray-200;
+    @apply text-gray-400;
   }
 </style>

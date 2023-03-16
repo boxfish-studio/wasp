@@ -8,7 +8,6 @@
   import { indexerClient, nodeClient, selectedNetwork } from '$lib/../store';
 
   let isSendingFunds: boolean;
-  let errorMessage: string;
 
   let balance: bigint = BigInt(0);
   let evmAddress: string = '';
@@ -24,7 +23,6 @@
       return;
     }
 
-    errorMessage = undefined;
     isSendingFunds = true;
 
     let wallet: IotaWallet = new IotaWallet(
@@ -63,7 +61,6 @@
         },
       );
     } catch (ex) {
-      errorMessage = ex;
       toast.pop(toastId);
       toast.push(ex.message);
     }
@@ -83,22 +80,14 @@
       autofocus
     />
 
-    <!-- TODO: when we add notification manager we should replace this with a notification. -->
-    {#if errorMessage}
-      <div class="error">
-        <div class="error_title">Error</div>
-        <div class="error_message">
-          {errorMessage}
-        </div>
-      </div>
-    {/if}
-
     <Button
       title="Send funds"
       disabled={!enableSendFunds}
       onClick={sendFunds}
       busy={isSendingFunds}
     />
+  {:else}
+    <span> Please select a network first. </span>
   {/if}
 </faucet-component>
 

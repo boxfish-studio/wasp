@@ -36,14 +36,14 @@
   <popup-overlay on:click|stopPropagation={handleClose} on:keydown />
   <popup-main>
     <popup-header>
-      <h3 class="capitalize">{title}</h3>
-      <Button onClick={handleClose} title="X" secondary />
+      <span class="capitalize">{title}</span>
+      <Button onClick={handleClose} title="x" secondary />
     </popup-header>
-    <popup-body class="p-4">
+    <popup-body>
       <slot />
     </popup-body>
     {#if actions?.length > 0}
-      <popup-footer class="space-x-4">
+      <popup-footer>
         {#each actions as { action, title }, index}
           <Button
             {title}
@@ -70,6 +70,7 @@
     @apply backdrop-blur-lg;
   }
   popup-main {
+    @apply p-6;
     @apply flex flex-col;
     @apply w-11/12 md:w-full;
     @apply bg-shimmer-background;
@@ -79,16 +80,13 @@
     min-height: 300px;
     popup-header {
       @apply flex justify-between items-center;
-      @apply p-4;
+      @apply pb-4;
       @apply text-2xl font-semibold;
-      @apply border-b border-shimmer-background-tertiary;
     }
 
     popup-footer {
-      @apply flex justify-end;
-      @apply p-4;
-      @apply border-t;
-      @apply border-solid border-shimmer-background-tertiary;
+      @apply flex justify-end space-x-4;
+      @apply py-4;
     }
   }
 </style>
