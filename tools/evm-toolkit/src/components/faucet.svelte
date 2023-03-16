@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { IotaWallet } from './faucet/iota_wallet';
   import { SendFundsTransaction } from './faucet/send_funds_transaction';
-  import { toast } from '@zerodevx/svelte-toast';
   import { selectedNetwork, nodeClient, indexerClient } from '../store';
   import { Bech32AddressLength, EVMAddressLength } from '../lib/constants';
   import { Input } from '.';
