@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Box, Tabs, FaucetNew } from '$components';
-  import Withdraw from '$components/withdraw/Withdraw.svelte';
+  import { Box, Tabs, FaucetNew, WithdrawNew } from '$components';
 
   const TABS = [
     {
@@ -11,7 +10,7 @@
     },
     {
       label: 'Withdraw',
-      component: Withdraw,
+      component: WithdrawNew,
     },
   ];
 </script>
