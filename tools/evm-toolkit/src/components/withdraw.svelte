@@ -17,12 +17,16 @@
   import { Bech32AddressLength } from '../lib/constants';
   import { onDestroy, onMount } from 'svelte';
   import { toast } from '@zerodevx/svelte-toast';
-  import type { WithdrawFormInput, WithdrawState } from './withdraw/component_types';
+  import type {
+    WithdrawFormInput,
+    WithdrawState,
+  } from './withdraw/component_types';
   import { ISCMagic } from './withdraw/iscmagic/iscmagic';
   import type { INativeToken } from '../../lib/native_token';
   import type { INFT } from '../../lib/nft';
   import { Input, Button } from '.';
   import { InputType } from '$lib/enums';
+  import { NotificationType, showNotification } from '$lib/notification';
 
   const state: WithdrawState = {
     availableBaseTokens: 0,
@@ -113,7 +117,11 @@
       return;
     }
 
-    state.availableNFTs = await state.iscMagic.getNFTs($nodeClient, $indexerClient, $selectedAccount);
+    state.availableNFTs = await state.iscMagic.getNFTs(
+      $nodeClient,
+      $indexerClient,
+      $selectedAccount,
+    );
   }
 
   async function pollAccount() {
@@ -171,8 +179,10 @@
         null,
       );*/
     } catch (ex) {
-      toast.push(`Failed to connect to wallet: ${ex}`);
-      console.log('connectToWallet', ex);
+      showNotification({
+        type: NotificationType.Error,
+        message: `Failed to connect to wallet: ${ex}`,
+      });
     }
 
     state.isLoading = false;
@@ -198,12 +208,15 @@
         nft,
       );
     } catch (ex) {
-      toast.push(
-        `Failed to send withdraw request: ${JSON.stringify(ex, null, 4)}`,
-        {
-          duration: 8000,
-        },
-      );
+      showNotification({
+        type: NotificationType.Error,
+        message: `Failed to send withdraw request: ${JSON.stringify(
+          ex,
+          null,
+          4,
+        )}`,
+        duration: 8000,
+      });
       console.log(ex);
       return;
     }
@@ -211,16 +224,21 @@
     console.log(result);
 
     if (result.status) {
-      toast.push(`Withdraw request sent. BlockIndex: ${result.blockNumber}`, {
+      showNotification({
+        type: NotificationType.Success,
+        message: `Withdraw request sent. BlockIndex: ${result.blockNumber}`,
         duration: 4000,
       });
     } else {
-      toast.push(
-        `Failed to send withdraw request: ${JSON.stringify(result, null, 4)}`,
-        {
-          duration: 8000,
-        },
-      );
+      showNotification({
+        type: NotificationType.Error,
+        message: `Failed to send withdraw request: ${JSON.stringify(
+          result,
+          null,
+          4,
+        )}`,
+        duration: 8000,
+      });
     }
   }
 
@@ -268,7 +286,6 @@
       state.availableNFTs,
     );
   }
-
 </script>
 
 <withdraw-component class="flex flex-col space-y-6 mt-6">
