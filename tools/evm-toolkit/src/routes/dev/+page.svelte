@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { Box, Tabs, Faucet } from '$components';
+  import { Box, Tabs, FaucetNew } from '$components';
   import Withdraw from '$components/withdraw/Withdraw.svelte';
 
   const TABS = [
     {
       label: 'Faucet',
       value: 1,
-      component: Faucet,
+      // TODO: replace Faucet component with FaucetNew
+      component: FaucetNew,
     },
     {
       label: 'Withdraw',
