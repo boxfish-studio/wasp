@@ -64,7 +64,7 @@
       &.secondary {
           @apply bg-shimmer-background;
           @apply border-0;
-          @apply text-shimmer-text-secondary;
+          @apply text-white;
 
       }
 
