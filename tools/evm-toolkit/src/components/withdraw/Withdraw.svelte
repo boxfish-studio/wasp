@@ -133,6 +133,8 @@
           from: $selectedAccount,
         },
       );*/
+
+      console.log('____', state)
       state.iscMagic = new ISCMagic(state.contract, null);
       await pollAccount();
       await subscribeBalance();

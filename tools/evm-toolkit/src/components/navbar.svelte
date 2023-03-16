@@ -34,7 +34,7 @@
       on:click={handleSettings}
       on:keydown={event => handleEnterKeyDown(event, handleSettings)}
     />
-    {#if !$connected}
+    {#if !$connected || !$selectedAccount}
       <Button onClick={handleAccount} title="Connect wallet" />
     {:else}
       <AccountButton

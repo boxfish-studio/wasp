@@ -11,6 +11,8 @@
   let top: number = 0;
   let parentRef = null;
 
+  let hideTooltipTimeout = null;
+
   onMount(() => {
     const rect = parentRef.getBoundingClientRect();
     left = rect.left + rect.width / 2;
@@ -20,8 +22,9 @@
   $: showTooltip = show && message;
 
   function handleClick(event) {
+    clearTimeout(hideTooltipTimeout);
     dispatch('click', event);
-    setTimeout(() => {
+    hideTooltipTimeout = setTimeout(() => {
       show = false;
     }, 2000);
   }
