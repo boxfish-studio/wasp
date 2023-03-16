@@ -10,6 +10,7 @@
     },
     {
       label: 'Withdraw',
+      // TODO: replace Withdraw component with WithdrawNew
       component: WithdrawNew,
     },
   ];
