@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { toast } from '@zerodevx/svelte-toast';
-
   import { Button, Input } from '$components';
 
+  import { indexerClient, nodeClient, selectedNetwork } from '$lib/../store';
   import { Bech32AddressLength, EVMAddressLength } from '$lib/constants';
   import { IotaWallet, SendFundsTransaction } from '$lib/faucet';
-  import { indexerClient, nodeClient, selectedNetwork } from '$lib/../store';
+  import { NotificationType, showNotification } from '$lib/notification';
 
   let isSendingFunds: boolean;
 
@@ -31,20 +30,25 @@
       $selectedNetwork.faucetEndpoint,
     );
 
-    let toastId: number;
-
     try {
-      toastId = toast.push('Initializing wallet');
       await wallet.initialize();
-      toast.pop(toastId);
+      showNotification({
+        type: NotificationType.Warning,
+        message: 'Initializing wallet',
+      });
 
-      toastId = toast.push('Requesting funds from the faucet', {
+      balance = await wallet.requestFunds();
+      showNotification({
+        type: NotificationType.Warning,
+        message: 'Requesting funds from the faucet',
         duration: 20 * 2000, // 20 retries, 2s delay each.
       });
-      balance = await wallet.requestFunds();
-      toast.pop(toastId);
 
-      toastId = toast.push('Sending funds');
+      showNotification({
+        type: NotificationType.Warning,
+        message: 'Sending funds',
+      });
+
       const transaction = new SendFundsTransaction(wallet);
       await transaction.sendFundsToEVMAddress(
         evmAddress,
@@ -52,17 +56,17 @@
         balance,
         BigInt(5000000),
       );
-      toast.pop(toastId);
 
-      toast.push(
-        'Funds successfully sent! It may take 10-30 seconds to arive.',
-        {
-          duration: 10 * 1000,
-        },
-      );
+      showNotification({
+        type: NotificationType.Success,
+        message: 'Funds successfully sent! It may take 10-30 seconds to arive.',
+        duration: 10 * 1000,
+      });
     } catch (ex) {
-      toast.pop(toastId);
-      toast.push(ex.message);
+      showNotification({
+        type: NotificationType.Error,
+        message: ex.message,
+      });
     }
 
     isSendingFunds = false;
@@ -91,22 +95,5 @@
   {/if}
 </faucet-component>
 
-<style>
-  .error {
-    background-color: #9e534a47;
-    border: 2px solid #991c0d78;
-    border-radius: 10px;
-    padding: 15px;
-  }
-
-  .error_title {
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-
-  component {
-    color: rgba(255, 255, 255, 0.87);
-    display: flex;
-    flex-direction: column;
-  }
+<style lang="scss">
 </style>

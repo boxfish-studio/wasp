@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { SvelteToast } from '@zerodevx/svelte-toast';
+  import { Navbar, PopupManager, NotificationManager } from '$components';
+  import '../app.scss';
   import { onMount } from 'svelte';
 
-  import { Navbar, PopupManager } from '$components';
   import { NETWORKS } from '$lib/networks';
   import { networks, selectedNetwork } from '../store';
 
@@ -22,7 +22,7 @@
   <slot />
 </main>
 <PopupManager />
-<SvelteToast />
+<NotificationManager />
 
 <style lang="scss">
   main {

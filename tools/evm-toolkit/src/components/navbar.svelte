@@ -3,11 +3,19 @@
   import { openPopup } from '$lib/popup/actions';
   import { handleEnterKeyDown } from '$lib/utils';
   import { NetworkSettings } from '.';
+  import { selectedAccount, connected } from 'svelte-web3';
+  import { Button, AccountButton } from '$components';
+  import { truncateText } from '$lib/utils';
 
   function handleSettings() {
     openPopup(PopupId.Settings, {
-      title: 'Network settings',
       component: NetworkSettings,
+    });
+  }
+  function handleAccount() {
+    openPopup(PopupId.Account, {
+      account: $selectedAccount,
+      actions: [],
     });
   }
 </script>
@@ -25,5 +33,13 @@
       on:click={handleSettings}
       on:keydown={event => handleEnterKeyDown(event, handleSettings)}
     />
+    {#if !$connected || !$selectedAccount}
+      <Button onClick={handleAccount} title="Connect wallet" />
+    {:else}
+      <AccountButton
+        title={truncateText($selectedAccount)}
+        onClick={handleAccount}
+      />
+    {/if}
   </items-wrapper>
 </nav>

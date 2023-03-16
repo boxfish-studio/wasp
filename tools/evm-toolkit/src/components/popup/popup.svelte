@@ -77,7 +77,6 @@
     @apply rounded-xl;
     @apply z-50;
     max-width: 500px;
-    min-height: 300px;
     popup-header {
       @apply flex justify-between items-center;
       @apply pb-4;
