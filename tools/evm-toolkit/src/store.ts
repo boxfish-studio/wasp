@@ -5,20 +5,21 @@ import { IndexerPluginClient, SingleNodeClient } from '@iota/iota.js';
 import { BrowserPowProvider } from '@iota/pow-browser.js';
 import { derived, writable, type Readable, type Writable } from 'svelte/store';
 
-const SELECTED_NETWORK_KEY = 'selectedNetwork';
+const SELECTED_NETWORK_KEY = 'selectedNetworkId';
+const NETWORKS_KEY = 'networks';
 
-export const networks = writable<NetworkOption[]>(NETWORKS);
-export const selectedNetworkId: Writable<NetworkOption> = persistent(
+export const networks: Writable<NetworkOption[]> = persistent<NetworkOption[]>(NETWORKS_KEY, NETWORKS);
+export const selectedNetworkId: Writable<number> = persistent(
   SELECTED_NETWORK_KEY,
-  null,
+  0,
 );
 
 export const selectedNetwork: Readable<NetworkOption> = derived(
   ([networks, selectedNetworkId]), ([$networks, $selectedNetworkId]) => {
-    if (!$selectedNetworkId) {
+    if (!$networks?.length || !($selectedNetworkId >= 0)) {
       return null;
     }
-    return $networks.find(network => network.id === $selectedNetworkId.id);
+    return $networks.find(network => network.id === $selectedNetworkId);
   }
 );
 

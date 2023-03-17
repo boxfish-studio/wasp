@@ -1,47 +1,56 @@
 <script lang="ts">
   import { Input, Select } from '$components';
-  import { selectedNetwork, networks, updateNetwork } from '../../store';
+  import type { NetworkOption } from '$lib/network_option';
+  import {
+    networks,
+    selectedNetwork,
+    selectedNetworkId,
+    updateNetwork,
+  } from '../../store';
 
-  $: $selectedNetwork, handleNetworkChange()
+  let _selectedNetwork: NetworkOption;
+  // local copy to manage updates afterwards
+  $: $selectedNetworkId, (_selectedNetwork = $selectedNetwork);
+  $: _selectedNetwork, handleNetworkChange();
+  $: networkSelectorOptions = $networks?.map(({ text, id }) => ({
+    label: text,
+    id,
+  }));
+  $: disableNetworkEdit = $selectedNetwork?.id !== 1;
 
   function handleNetworkChange() {
-    updateNetwork($selectedNetwork, $selectedNetwork.id)
+    updateNetwork(_selectedNetwork);
   }
 </script>
 
 <network-settings-component class="flex flex-col space-y-4">
-  {#if $selectedNetwork}
-    <Select
-      options={$networks}
-      displayValue={network => network.text}
-      bind:value={$selectedNetwork}
-      index={$networks?.findIndex(network => network.id === $selectedNetwork.id)}
-    />
+  {#if _selectedNetwork}
+    <Select options={networkSelectorOptions} bind:value={$selectedNetworkId} />
     <div class="flex flex-col space-y-2">
       <Input
         id="hornetEndpoint"
         label="Hornet API endpoint"
-        bind:value={$selectedNetwork.apiEndpoint}
-        disabled={$selectedNetwork.id !== 1}
+        bind:value={_selectedNetwork.apiEndpoint}
+        disabled={disableNetworkEdit}
         stretch
       />
       <Input
         id="faucetEndpoint"
         label="Faucet API endpoint"
-        bind:value={$selectedNetwork.faucetEndpoint}
-        disabled={$selectedNetwork.id !== 1}
+        bind:value={_selectedNetwork.faucetEndpoint}
+        disabled={disableNetworkEdit}
         stretch
       />
       <Input
         id="chainAddress"
         label="Chain Address"
-        bind:value={$selectedNetwork.chainAddress}
-        disabled={$selectedNetwork.id !== 1}
+        bind:value={_selectedNetwork.chainAddress}
+        disabled={disableNetworkEdit}
         stretch
       />
     </div>
   {:else}
-    <span>Loading Network Config File...</span>
+    <span>Loading Network Configuration...</span>
   {/if}
 </network-settings-component>
 

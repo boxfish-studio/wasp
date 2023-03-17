@@ -91,7 +91,7 @@
       busy={isSendingFunds}
     />
   {:else}
-    <span> Please select a network first. </span>
+    <span>Loading Network Configuration...</span>
   {/if}
 </faucet-component>
 
