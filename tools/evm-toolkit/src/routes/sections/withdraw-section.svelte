@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { InputType } from '$lib/enums';
+  import { InputType } from '$lib/common/enums';
   import type { INativeToken } from '$lib/native_token';
   import { NotificationType, showNotification } from '$lib/notification';
   import {
@@ -8,11 +8,11 @@
     withdrawStateStore,
   } from '$lib/withdraw';
   import { chainId, connected, selectedAccount } from 'svelte-web3';
-  import { Button, Input } from '.';
-  import { Bech32AddressLength } from '../lib/constants';
+  import { Button, Input } from '$components';
+  import { Bech32AddressLength } from '$lib/constants';
   import { nodeClient } from '$lib/evm-toolkit';
-  import type { WithdrawFormInput } from './withdraw/component_types';
-  import { gasFee } from './withdraw/constants';
+  import type { WithdrawFormInput } from '../../components/withdraw/component_types';
+  import { gasFee } from '../../components/withdraw/constants';
 
   const formInput: WithdrawFormInput = {
     receiverAddress: '',
