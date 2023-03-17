@@ -1,14 +1,15 @@
 <script lang="ts">
   import { Input, Select } from '$components';
-  import type { NetworkOption } from '$lib/network_option';
+
   import {
     networks,
     selectedNetwork,
     selectedNetworkId,
     updateNetwork,
-  } from '../../store';
+    type INetwork,
+  } from '$lib/evm-toolkit';
 
-  let _selectedNetwork: NetworkOption;
+  let _selectedNetwork: INetwork;
   // local copy to manage updates afterwards
   $: $selectedNetworkId, (_selectedNetwork = $selectedNetwork);
   $: _selectedNetwork, handleNetworkChange();

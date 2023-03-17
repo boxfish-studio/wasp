@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button, Input } from '$components';
 
-  import { indexerClient, nodeClient, selectedNetwork } from '$lib/../store';
+  import { indexerClient, nodeClient, selectedNetwork } from '$lib/evm-toolkit';
   import { Bech32AddressLength, EVMAddressLength } from '$lib/constants';
   import { IotaWallet, SendFundsTransaction } from '$lib/faucet';
   import { NotificationType, showNotification } from '$lib/notification';

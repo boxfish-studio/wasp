@@ -1,6 +1,6 @@
-import type { NetworkOption } from '$lib/network_option';
+import type { INetwork } from '../interfaces';
 
-export const NETWORKS: NetworkOption[] = [
+export const NETWORKS: INetwork[] = [
   {
     "id": 0,
     "text": "Shimmer Beta Network",
