@@ -1,6 +1,12 @@
 <script lang="ts">
   import { Input, Select } from '$components';
-  import { selectedNetwork, networks } from '../../store';
+  import { selectedNetwork, networks, updateNetwork } from '../../store';
+
+  $: $selectedNetwork, handleNetworkChange()
+
+  function handleNetworkChange() {
+    updateNetwork($selectedNetwork, $selectedNetwork.id)
+  }
 </script>
 
 <network-settings-component class="flex flex-col space-y-4">
