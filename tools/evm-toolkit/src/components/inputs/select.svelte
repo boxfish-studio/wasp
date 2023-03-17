@@ -4,7 +4,7 @@
   export let options: NetworkOption[] | string[] = [];
   export let displayValue = (option: NetworkOption) => option.text;
   export let index: number = 0;
-  export let value: NetworkOption | string = options[index];
+  export let value: NetworkOption | string;
 
   $: value = options[index];
 </script>
@@ -42,7 +42,6 @@
 
     select:hover,
     select:focus {
-      @apply text-gray-400;
       @apply bg-shimmer-background-tertiary;
     }
     select:disabled {
