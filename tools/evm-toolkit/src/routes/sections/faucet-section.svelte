@@ -59,7 +59,7 @@
 
       showNotification({
         type: NotificationType.Success,
-        message: 'Funds successfully sent! It may take 10-30 seconds to arive.',
+        message: 'Funds successfully sent! It may take 10-30 seconds to arrive.',
         duration: 10 * 1000,
       });
     } catch (ex) {
