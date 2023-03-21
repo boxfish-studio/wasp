@@ -1,25 +1,18 @@
-import type { Contract } from 'web3-eth-contract';
-import {
-  web3,
-} from 'svelte-web3';
-import type { Eth } from 'web3-eth';
-import { hNameFromString } from '../../../lib/hname';
-import { evmAddressToAgentID } from '../../../lib/evm';
-import { getBalanceParameters, withdrawParameters } from './../parameters';
-import { getNativeTokenMetaData, type INativeToken } from '../../../lib/native_token';
-import { type INFT, getNFTMetadata } from '../../../lib/nft';
-import { Converter } from '@iota/util.js';
-import { NativeTokenIDLength } from '../../../lib/constants';
 import type { IndexerPluginClient, SingleNodeClient } from '@iota/iota.js';
-import { gasFee, iscAbi, iscContractAddress } from './../constants';
-
-
+import { Converter } from '@iota/util.js';
 import {
-  Multicall,
-  type ContractCallResults,
-  type ContractCallContext,
+  Multicall, type ContractCallContext, type ContractCallResults
 } from 'ethereum-multicall';
 import type Web3 from 'web3';
+import type { Eth } from 'web3-eth';
+import type { Contract } from 'web3-eth-contract';
+
+import { NativeTokenIDLength } from '$lib/constants';
+import { evmAddressToAgentID } from '$lib/evm';
+import { hNameFromString } from '$lib/hname';
+import { getNativeTokenMetaData, type INativeToken } from '$lib/native_token';
+import { getNFTMetadata, type INFT } from '$lib/nft';
+import { gasFee, getBalanceParameters, iscAbi, iscContractAddress, withdrawParameters } from '$lib/withdraw';
 
 export type NFTDict = [string, string][];
 
@@ -105,6 +98,8 @@ export class ISCMagic {
     // and go through the list dynamically.
     const nftIds = nfts.filter(x => Converter.hexToUtf8(x[0]) != 'i');
     const availableNFTs = nftIds.map(x => <INFT>{ id: x[1] });
+
+    console.log(nftIds)
 
     for (let nft of availableNFTs) {
       nft.metadata = await getNFTMetadata(nodeClient, indexerClient, nft.id);

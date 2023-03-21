@@ -1,7 +1,8 @@
-import { Converter } from '@iota/util.js';
-import { waspAddrBinaryFromBech32 } from './../../lib/bech32';
 import type { SingleNodeClient } from '@iota/iota.js';
+import { Converter } from '@iota/util.js';
+
 import type { INativeToken } from '../../lib/native_token';
+import { waspAddrBinaryFromBech32 } from './../../lib/bech32';
 
 export function getBalanceParameters(agentID: Uint8Array) {
   return {
@@ -12,17 +13,6 @@ export function getBalanceParameters(agentID: Uint8Array) {
       },
     ],
   };
-}
-
-export interface INativeTokenWithdraw {
-  /**
-   * Identifier of the native token.
-   */
-  ID: string;
-  /**
-   * Amount of native tokens of the given Token ID.
-   */
-  amount: bigint;
 }
 
 export async function withdrawParameters(

@@ -1,13 +1,14 @@
 <script lang="ts">
   import { Button, Tooltip } from '$components';
-  import { closePopup, PopupId } from '$lib/popup';
+
   import {
     copyToClipboard,
     handleEnterKeyDown,
     truncateText,
-  } from '$lib/utils';
-  import { connectToWallet, disconnectWallet } from '$lib/withdraw';
+  } from '$lib/common';
   import { NotificationType, showNotification } from '$lib/notification';
+  import { closePopup, PopupId } from '$lib/popup';
+  import { connectToWallet, disconnectWallet } from '$lib/withdraw';
 
   export let account = undefined;
 
