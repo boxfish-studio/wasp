@@ -6,7 +6,7 @@
   import { InputType } from '$lib/common/enums';
   import { Bech32AddressLength } from '$lib/constants';
   import { nodeClient } from '$lib/evm-toolkit';
-  import type { INativeToken } from '$lib/native_token';
+  import type { INativeToken } from '$lib/native-token';
   import { NotificationType, showNotification } from '$lib/notification';
   import type { WithdrawFormInput } from '$lib/withdraw';
   import {

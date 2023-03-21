@@ -2,7 +2,7 @@ import type { SetIntervalAsyncTimer } from 'set-interval-async';
 import type { Contract } from 'web3-eth-contract';
 
 import type { ISCMagic } from '$lib/iscmagic';
-import type { INativeToken } from '$lib/native_token';
+import type { INativeToken } from '$lib/native-token';
 import type { INFT } from '$lib/nft';
 
 export interface WithdrawState {

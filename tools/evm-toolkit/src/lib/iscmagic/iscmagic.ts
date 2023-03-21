@@ -8,11 +8,11 @@ import type { Eth } from 'web3-eth';
 import type { Contract } from 'web3-eth-contract';
 
 import { NativeTokenIDLength } from '$lib/constants';
-import { evmAddressToAgentID } from '$lib/evm';
-import { hNameFromString } from '$lib/hname';
-import { getNativeTokenMetaData, type INativeToken } from '$lib/native_token';
+import { getNativeTokenMetaData, type INativeToken } from '$lib/native-token';
 import { getNFTMetadata, type INFT } from '$lib/nft';
 import { gasFee, getBalanceParameters, iscAbi, iscContractAddress, withdrawParameters } from '$lib/withdraw';
+
+import { evmAddressToAgentID, hNameFromString } from './utils';
 
 export type NFTDict = [string, string][];
 
