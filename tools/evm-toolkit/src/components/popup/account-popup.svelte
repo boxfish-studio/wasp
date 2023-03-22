@@ -1,5 +1,7 @@
 <script lang="ts">
   import { Button, Tooltip } from '$components';
+
+  import { NotificationType, showNotification } from '$lib/notification';
   import { closePopup, PopupId } from '$lib/popup';
   import {
     copyToClipboard,
@@ -7,7 +9,6 @@
     truncateText,
   } from '$lib/utils';
   import { connectToWallet, disconnectWallet } from '$lib/withdraw';
-  import { NotificationType, showNotification } from '$lib/notification';
 
   export let account = undefined;
 
@@ -80,10 +81,9 @@
       on:keydown={event => handleEnterKeyDown(event, onConnectClick)}
       class:disconnected={!account}
     >
-      <metamask-box class="flex items-center justify-center space-x-4">
-        <img src="/metamask-logo.png" alt="metamask icon" />
+      <div class="flex items-center justify-center space-x-4">
         <span class="text-white font-semibold">Connect your wallet</span>
-      </metamask-box>
+      </div>
     </box-item>
   {/if}
 </div>
