@@ -3,10 +3,10 @@
 
   import { AccountButton, Button } from '$components';
 
+  import { handleEnterKeyDown, truncateText } from '$lib/common';
   import { NotificationType, showNotification } from '$lib/notification';
   import { PopupId } from '$lib/popup';
   import { openPopup } from '$lib/popup/actions';
-  import { handleEnterKeyDown, truncateText } from '$lib/utils';
   import { connectToWallet } from '$lib/withdraw';
 
   function handleSettings() {
