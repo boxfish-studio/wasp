@@ -12,7 +12,8 @@
   export let stretch: boolean = false;
   export let busy: boolean = false;
   export let secondary: boolean = false;
-  export let outline: boolean = false;
+  export let ghost: boolean = false;
+  export let busyMessage: string = 'Loading...';
 
   $: href = htmlType === ButtonHtmlType.Link ? url : undefined;
   $: target =
@@ -31,14 +32,13 @@
   disabled={disabled || busy}
   on:click={onClick}
   on:keydown={event => handleEnterKeyDown(event, onClick)}
-  class:link={htmlType === ButtonHtmlType.Link}
   class:danger
   class:w-full={stretch}
   class:secondary
   class:compact
-  class:outline
+  class:ghost
 >
-  {busy ? 'Loading...' : title}
+  {busy ? busyMessage : title}
 </svelte:element>
 
 <style lang="scss">
@@ -50,20 +50,11 @@
     @apply p-3;
     @apply rounded-md;
     @apply text-center;
+    @apply transition-all;
 
     &:disabled {
       @apply opacity-50;
       @apply cursor-not-allowed;
-    }
-    &.link {
-      @apply bg-transparent;
-      @apply text-zinc-800;
-      @apply border-2;
-      @apply border-zinc-800;
-      &:hover {
-        @apply bg-zinc-800;
-        @apply text-white;
-      }
     }
 
     &.secondary {
@@ -76,12 +67,15 @@
       @apply text-shimmer-text-error;
     }
 
-    &.outline {
+    &.ghost {
       @apply bg-transparent;
       @apply text-shimmer-action-primary;
-      &:hover {
-        @apply bg-shimmer-action-primary;
-        @apply text-shimmer-text-primary;
+      @apply border border-shimmer-action-primary;
+      &.secondary {
+        @apply border-shimmer-text-secondary;
+      }
+      &.danger {
+        @apply border-shimmer-text-error;
       }
     }
 

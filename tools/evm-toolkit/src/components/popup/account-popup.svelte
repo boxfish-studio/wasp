@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Tooltip } from '$components';
+  import { Button, Dot, Tooltip } from '$components';
 
   import {
     copyToClipboard,
@@ -52,9 +52,10 @@
 
 <div class="flex flex-row items-center py-6">
   {#if account}
-    <box-item class:connected={account}>
+    <account-box>
       <account-address class="flex items-center justify-between w-full">
-        <div class="dot-primary flex items-center justify-between space-x-2">
+        <div class="flex items-center justify-between space-x-2">
+          <div><Dot /></div>
           <span class="font-semibold">{truncateText(account)}</span>
           <Tooltip message="Copied" bind:show={showCopiedTooltip}>
             <img
@@ -67,46 +68,35 @@
             />
           </Tooltip>
         </div>
-        <Button
-          title="Disconnect"
-          outline
-          compact
-          onClick={onDisconnectClick}
-        />
+        <Button title="Disconnect" compact ghost onClick={onDisconnectClick} />
       </account-address>
-    </box-item>
+    </account-box>
   {:else}
-    <box-item
+    <wallet-box
       on:click={onConnectClick}
       on:keydown={event => handleEnterKeyDown(event, onConnectClick)}
-      class:disconnected={!account}
     >
       <metamask-box class="flex items-center justify-center space-x-4">
         <img src="/metamask-logo.png" alt="metamask icon" />
         <span class="text-white font-semibold">Connect your wallet</span>
       </metamask-box>
-    </box-item>
+    </wallet-box>
   {/if}
 </div>
 
 <style lang="scss">
-  box-item {
+  account-box,
+  wallet-box {
     @apply relative;
     @apply w-full;
-    @apply flex;
-    @apply justify-between;
+    @apply flex justify-between;
     @apply bg-shimmer-background-tertiary;
     @apply rounded-xl;
     @apply p-4;
-    @apply transition-all;
-    @apply duration-200;
-    @apply ease-in-out;
-    &.connected {
-      @apply pl-8;
-    }
-    &.disconnected {
-      @apply cursor-pointer;
-      @apply hover:bg-shimmer-background-tertiary-hover;
-    }
+    @apply transition-all duration-200 ease-in-out;
+  }
+  wallet-box {
+    @apply cursor-pointer;
+    @apply hover:bg-shimmer-background-tertiary-hover;
   }
 </style>
