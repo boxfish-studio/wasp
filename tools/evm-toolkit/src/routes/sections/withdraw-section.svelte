@@ -22,6 +22,7 @@
   };
 
   let isWithdrawing: boolean = false;
+  let isWithdrawingEverything: boolean = false;
 
   $: formattedBalance = ($withdrawStateStore.availableBaseTokens / 1e6).toFixed(
     2,
@@ -144,6 +145,7 @@
   }
 
   async function onWithdrawEverythingClick() {
+    isWithdrawingEverything = true;
     try {
       for (let nft of $withdrawStateStore.availableNFTs.reverse()) {
         await pollBalance();
@@ -158,6 +160,7 @@
         null,
       );
     } catch {}
+    isWithdrawingEverything = false;
   }
 </script>
 
@@ -222,16 +225,19 @@
     {/if}
     <Button
       title="Withdraw"
+      busyMessage="Withdrawing..."
       onClick={onWithdrawClick}
-      disabled={!canWithdraw}
-      busy={isWithdrawing}
+      disabled={!canWithdraw || isWithdrawingEverything}
+      busy={(isWithdrawing && !isWithdrawingEverything)}
       stretch
     />
     <Button
       danger
       title="Withdraw everything at once"
+      busyMessage="Withdrawing everything at once..."
       onClick={onWithdrawEverythingClick}
       disabled={!canWithdrawEverything || isWithdrawing}
+      busy={isWithdrawingEverything}
       stretch
     />
   {/if}
