@@ -86,6 +86,7 @@
         nftID,
       );
     } catch (ex) {
+      isWithdrawing = false;
       showNotification({
         type: NotificationType.Error,
         message: `Failed to send withdraw request: ${ex.message}`,
@@ -230,7 +231,7 @@
       danger
       title="Withdraw everything at once"
       onClick={onWithdrawEverythingClick}
-      disabled={!canWithdrawEverything}
+      disabled={!canWithdrawEverything || isWithdrawing}
       stretch
     />
   {/if}
